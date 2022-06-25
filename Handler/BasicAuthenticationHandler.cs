@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using ProductAPIVS.Models;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 namespace ProductAPIVS.Handler
 
 {
@@ -23,14 +24,14 @@ namespace ProductAPIVS.Handler
                 return AuthenticateResult.Fail("No header found");
 
             var _haedervalue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-            var bytes = Convert.FromBase64String(_haedervalue.Parameter);
+            var bytes = Convert.FromBase64String(_haedervalue.Parameter!=null?_haedervalue.Parameter:string.Empty);
             string credentials = Encoding.UTF8.GetString(bytes);
             if (!string.IsNullOrEmpty(credentials))
             {
                 string[] array = credentials.Split(":");
                 string username = array[0];
                 string password = array[1];
-                 var user=this._DBContext.TblUsers.FirstOrDefault(item=>item.Userid==username && item.Password==password);
+                 var user=await this._DBContext.TblUsers.FirstOrDefaultAsync(item=>item.Userid==username && item.Password==password);
                  if(user==null)
                    return AuthenticateResult.Fail("UnAuthorized");
 

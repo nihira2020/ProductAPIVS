@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductAPIVS.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using ProductAPIVS.Container;
 
 namespace ProductAPIVS.Controllers;
 
@@ -10,52 +12,36 @@ namespace ProductAPIVS.Controllers;
 public class ProductController : ControllerBase
 {
 
-    private readonly Learn_DBContext _DBContext;
+    private readonly IProductContainer _DBContext;
 
-    public ProductController(Learn_DBContext dBContext)
+
+    public ProductController(IProductContainer dBContext)
     {
         this._DBContext = dBContext;
     }
 
     [HttpGet("GetAll")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var product = this._DBContext.Products.ToList();
+        var product =await this._DBContext.GetAll();
         return Ok(product);
     }
     [HttpGet("GetbyCode/{code}")]
-    public IActionResult GetbyCode(int code)
+    public async Task<IActionResult> GetbyCode(int code)
     {
-        var product = this._DBContext.Products.FirstOrDefault(o => o.Id == code);
+        var product = await this._DBContext.GetbyCode(code);
         return Ok(product);
     }
     [HttpDelete("Remove/{code}")]
-    public IActionResult Remove(int code)
+    public async Task<IActionResult> Remove(int code)
     {
-        var product = this._DBContext.Products.FirstOrDefault(o => o.Id == code);
-        if (product != null)
-        {
-            this._DBContext.Remove(product);
-            this._DBContext.SaveChanges();
-            return Ok(true);
-        }
+        var product =await this._DBContext.Remove(code);
         return Ok(false);
     }
     [HttpPost("Create")]
-    public IActionResult Create([FromBody] Product _product)
+    public async Task<IActionResult> Create([FromBody] Product _product)
     {
-        var product = this._DBContext.Products.FirstOrDefault(o => o.Id == _product.Id);
-        if (product != null)
-        {
-            product.Name = _product.Name;
-            product.Price = _product.Price;
-            this._DBContext.SaveChanges();
-        }
-        else
-        {
-            this._DBContext.Products.Add(_product);
-            this._DBContext.SaveChanges();
-        }
+        var product =await this._DBContext.Save(_product);
         return Ok(true);
     }
 }
