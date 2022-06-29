@@ -35,9 +35,9 @@ public class UserController : ControllerBase
         var tokendesc = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(
-    new Claim[] { new Claim(ClaimTypes.Name, user.Userid) }
+    new Claim[] { new Claim(ClaimTypes.Name, user.Userid),new Claim(ClaimTypes.Role, user.Role) }
 ),
-            Expires = DateTime.Now.AddSeconds(20),
+            Expires = DateTime.Now.AddMinutes(20),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenkey), SecurityAlgorithms.HmacSha256)
         };
         var token = tokenhandler.CreateToken(tokendesc);
