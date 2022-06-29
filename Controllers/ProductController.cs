@@ -6,7 +6,7 @@ using ProductAPIVS.Container;
 
 namespace ProductAPIVS.Controllers;
 
-[Authorize]
+[Authorize(Roles ="admin,user")]
 [ApiController]
 [Route("[controller]")]
 public class ProductController : ControllerBase
@@ -32,12 +32,16 @@ public class ProductController : ControllerBase
         var product = await this._DBContext.GetbyCode(code);
         return Ok(product);
     }
+
+    [Authorize(Roles ="admin")]
     [HttpDelete("Remove/{code}")]
     public async Task<IActionResult> Remove(int code)
     {
         var product =await this._DBContext.Remove(code);
         return Ok(false);
     }
+
+    [Authorize(Roles ="admin")]
     [HttpPost("Create")]
     public async Task<IActionResult> Create([FromBody] Product _product)
     {
