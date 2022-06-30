@@ -18,7 +18,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProductContainer, ProductContainer>();
 
 // This is for basic authentication
 //builder.Services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions,BasicAuthenticationHandler>("BasicAuthentication",null);
@@ -46,6 +45,10 @@ builder.Services.AddDbContext<Learn_DBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("constring"));
 });
+
+builder.Services.AddScoped<IProductContainer, ProductContainer>();
+builder.Services.AddScoped<IRefereshTokenGenerator, RefereshTokenGenerator>();
+
 
 var _jwtsettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(_jwtsettings);
