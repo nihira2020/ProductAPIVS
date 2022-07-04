@@ -64,3 +64,4 @@ F:\LaernCore\ProductAPIVS\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJs
 F:\LaernCore\ProductAPIVS\bin\Debug\net6.0\Newtonsoft.Json.dll
 F:\LaernCore\ProductAPIVS\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 F:\LaernCore\ProductAPIVS\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+F:\LaernCore\ProductAPIVS\bin\Debug\net6.0\AutoMapper.dll

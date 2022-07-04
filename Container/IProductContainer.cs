@@ -1,9 +1,11 @@
 using ProductAPIVS.Models;
+using ProductAPIVS.Entity;
 namespace ProductAPIVS.Container;
+
 public interface IProductContainer
 {
-    Task<List<Product>> GetAll();
-    Task<Product> GetbyCode(int code);
+    Task<List<ProductEntity>> GetAll();
+    Task<ProductEntity> GetbyCode(int code);
     Task<bool> Remove(int code);
-    Task<bool> Save(Product _product);
+    Task<bool> Save(ProductEntity _product);
 }

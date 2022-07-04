@@ -1,30 +1,41 @@
 
 using Microsoft.EntityFrameworkCore;
 using ProductAPIVS.Models;
+using ProductAPIVS.Entity;
+using AutoMapper;
 
 namespace ProductAPIVS.Container;
-public class ProductContainer :IProductContainer
+public class ProductContainer : IProductContainer
 {
     private readonly Learn_DBContext _DBContext;
-    public ProductContainer(Learn_DBContext dBContext)
+    private readonly IMapper _mapper;
+    public ProductContainer(Learn_DBContext dBContext,IMapper mapper1)
     {
         this._DBContext = dBContext;
+        this._mapper=mapper1;
     }
 
-    public async Task<List<Product>> GetAll()
+    public async Task<List<ProductEntity>> GetAll()
     {
-        return await _DBContext.Products.ToListAsync();
+        List<ProductEntity> resp = new List<ProductEntity>();
+        var product = await _DBContext.Products.ToListAsync();
+        if (product != null)
+        {
+            resp=_mapper.Map<List<Product>,List<ProductEntity>>(product);
+        }
+        return resp;
     }
-    public async Task<Product> GetbyCode(int code)
+    public async Task<ProductEntity> GetbyCode(int code)
     {
         var product = await _DBContext.Products.FindAsync(code);
         if (product != null)
         {
-            return product;
+            ProductEntity resp=_mapper.Map<Product,ProductEntity>(product);
+            return resp;
         }
         else
         {
-            return new Product();
+            return new ProductEntity();
         }
     }
     public async Task<bool> Remove(int code)
@@ -42,21 +53,22 @@ public class ProductContainer :IProductContainer
         }
     }
 
-    public async Task<bool> Save(Product _product)
+    public async Task<bool> Save(ProductEntity _product)
     {
         var product = this._DBContext.Products.FirstOrDefault(o => o.Id == _product.Id);
-            if (product != null)
-            {
-                product.Name = _product.Name;
-                product.Price = _product.Price;
-                await this._DBContext.SaveChangesAsync();
-            }
-            else
-            {
-                this._DBContext.Products.Add(_product);
-                await this._DBContext.SaveChangesAsync();
-            }
-            return true;
+        if (product != null)
+        {
+            product.Name = _product.ProductName;
+            product.Price = _product.Price;
+            await this._DBContext.SaveChangesAsync();
+        }
+        else
+        {
+            Product _prod=_mapper.Map<ProductEntity,Product>(_product);
+            this._DBContext.Products.Add(_prod);
+            await this._DBContext.SaveChangesAsync();
+        }
+        return true;
     }
 
 

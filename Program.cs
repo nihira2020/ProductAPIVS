@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using AutoMapper;
+using ProductAPIVS.Entity;
+
 
 using ProductAPIVS.Container;
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +51,10 @@ builder.Services.AddDbContext<Learn_DBContext>(options =>
 
 builder.Services.AddScoped<IProductContainer, ProductContainer>();
 builder.Services.AddScoped<IRefereshTokenGenerator, RefereshTokenGenerator>();
+
+var automapper=new MapperConfiguration(item=>item.AddProfile(new AutoMapperHandler()));
+IMapper mapper=automapper.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 
 var _jwtsettings = builder.Configuration.GetSection("JwtSettings");

@@ -3,10 +3,11 @@ using ProductAPIVS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ProductAPIVS.Container;
+using ProductAPIVS.Entity;
 
 namespace ProductAPIVS.Controllers;
 
-[Authorize(Roles ="admin,user")]
+///[Authorize(Roles ="admin,user")]
 [ApiController]
 [Route("[controller]")]
 public class ProductController : ControllerBase
@@ -41,9 +42,9 @@ public class ProductController : ControllerBase
         return Ok(false);
     }
 
-    [Authorize(Roles ="admin")]
+    //[Authorize(Roles ="admin")]
     [HttpPost("Create")]
-    public async Task<IActionResult> Create([FromBody] Product _product)
+    public async Task<IActionResult> Create([FromBody] ProductEntity _product)
     {
         var product =await this._DBContext.Save(_product);
         return Ok(true);

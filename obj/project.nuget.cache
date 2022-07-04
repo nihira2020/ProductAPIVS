@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "37sldhzLNlqSIOyH/IsrcXUJ2yfXUEU/OWrp8rnsps8z48FTc/iXJ16/u8eclW7KJggMkAX5QnrONIx5tZra9w==",
+  "dgSpecHash": "O8/UZVPQIzuBJTuVc9P4KuHO+yfD5YYg3UyfR+Tcf221dIwe1jRT2NlAvxWtK1DTz4VqiX3jrN1yhjWVFBtV3w==",
   "success": true,
   "projectFilePath": "F:\\LaernCore\\ProductAPIVS\\ProductAPIVS.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Natarajan\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Natarajan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Natarajan\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.6\\microsoft.aspnetcore.authentication.jwtbearer.6.0.6.nupkg.sha512",
     "C:\\Users\\Natarajan\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\6.0.6\\microsoft.aspnetcore.jsonpatch.6.0.6.nupkg.sha512",
